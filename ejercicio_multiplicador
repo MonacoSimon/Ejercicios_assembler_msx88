@@ -1,0 +1,23 @@
+org 1000h
+a dw 5
+b dw 6
+resul dw ?
+
+org 3000H
+multi: 
+mov ax,0
+loop: add ax,cx
+  dec dx
+  jnz loop
+  jz fin
+fin: ret
+
+
+org 2000H
+mov dx,a
+mov cx,b
+mov resul,0
+call multi
+mov resul,ax
+int 0
+end
