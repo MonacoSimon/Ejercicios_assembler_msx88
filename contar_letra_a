@@ -1,0 +1,19 @@
+org 1000H
+car_fin db "."
+car_a db "a"
+cont db 0
+car db ?
+cont_a db 0
+
+org 2000H
+mov bx, offset car
+loop: int 6
+mov al, [bx]
+cmp al, car_fin
+jz fin
+cmp al,car_a
+jnz loop
+inc cont_a
+jmp loop
+fin: int 0
+end
