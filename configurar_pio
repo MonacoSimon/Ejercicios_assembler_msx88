@@ -1,0 +1,28 @@
+ca equ 32h
+pb equ 31h
+
+org 2000h
+loop: mov al, 0ffh
+out ca,al
+
+mov al,50
+out pb,al
+jmp loop
+int 0
+end
+
+cb equ 33h
+pb equ 31h
+
+org 2000h
+mov al,0000h
+out cb,al
+mov cx,100
+loop: mov al, 0ffh
+out pb,al
+mov al, 000h
+out pb,al
+dec cx
+jnz loop
+int 0
+end

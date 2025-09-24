@@ -1,0 +1,26 @@
+cb equ 33h
+pb equ 31h
+
+org 1000h
+letra db ?
+cero db "0"
+
+org 2000h
+mov al,0000h
+out cb,al
+
+mov bx,offset letra
+int 6
+mov cl,[bx]
+
+sub cl, cero
+
+mov al,1
+loop: cmp cl,0
+jz mandar
+add al,al
+dec cl
+jmp loop
+mandar: out pb,al
+hlt
+end
