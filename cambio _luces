@@ -1,0 +1,20 @@
+;Escribir un programa que encienda 
+;las luces con el patrón 11000011, o sea, solo
+;las primeras y las últimas dos luces deben prenderse, y 
+;el resto deben apagarse.
+
+cb equ 33h
+pb equ 31h
+
+org 1000h
+patron db 11000011b
+
+org 2000h
+mov al, 0
+out cb, al
+
+mov al,patron
+out pb,al
+
+int 0
+end

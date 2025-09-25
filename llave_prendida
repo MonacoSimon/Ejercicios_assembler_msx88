@@ -1,0 +1,32 @@
+;Escribir un programa que 
+;verifique si la llave de más a la 
+;izquierda está prendida. Si es
+;así, mostrar en pantalla el 
+;mensaje “Llave prendida”, y de lo 
+;contrario mostrar “Llave apagada”. Solo
+;importa el valor de la llave 
+;de más a la izquierda (bit más significativo). 
+;Recordar que las llaves se
+;manejan con las teclas 0-7.
+pa equ 30h
+ca equ 32h
+
+org 1000h
+msjExito db "llave prendida"
+fin db ?
+
+org 2000h
+mov al, 0ffh
+out ca, al
+
+loop: in al,pa
+and al, 10000000b
+cmp al,0
+jnz mensaje
+jmp loop
+
+mensaje: mov bx, offset msjExito
+mov al, offset fin - offset msjExito
+int 7
+int 0
+end

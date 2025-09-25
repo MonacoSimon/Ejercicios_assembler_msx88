@@ -1,0 +1,37 @@
+dato equ 40h
+estado equ 41h
+
+org 1000h
+char db "a"
+
+org 2000h
+loop: in al,estado
+and al,1
+jnz loop
+mov al,char
+out dato,al
+jmp loop
+int 0
+end
+
+
+dato equ 40h
+estado equ 41h
+org 1000h
+msj db "holas"
+fin db ?
+
+org 2000h
+mov bx,offset msj
+mov cl, offset fin - offset msj
+loop: in al,estado
+and al,1
+jnz loop
+mov al, [bx]
+out dato,al
+inc bx
+dec cl
+jnz loop
+
+int 0
+end
