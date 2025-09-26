@@ -1,0 +1,30 @@
+eoi equ 20h
+imr equ 21h
+int0 equ 24h
+
+org 1000h
+msj db "chau"
+fin db ?
+
+org 3000h
+saludar:mov bx,offset msj
+mov al,4
+int 7
+mov al ,20h
+out eoi,al
+iret
+
+org 2000h
+mov al,11111110b
+out imr,al
+
+mov al,24
+out int0,al
+
+mov bx,96
+mov word ptr [bx],3000h
+
+loop:jmp loop
+
+int 0
+end

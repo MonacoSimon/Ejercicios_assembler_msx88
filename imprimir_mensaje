@@ -1,0 +1,71 @@
+;Escribir un programa que solicita el 
+;ingreso de cinco caracteres por teclado y
+;los envía de a uno por vez a la 
+;impresora a través de la PIO a medida 
+;que se van ingresando. No es
+;necesario mostrar los caracteres 
+;en la pantalla. Utilizar la subrutina 
+;imprimir_caracter del inciso
+;anterior.
+pa equ 30h
+pb equ 31h
+ca equ 32h
+cb equ 33h
+
+org 1000h
+msj db ?,?,?,?,?
+fin db ?
+
+org 3000h
+iniciar:
+mov al,0fdh
+out ca,al
+mov al, 0
+out cb,al
+ret
+
+org 3100h
+strobe0:
+in al,pa
+and al,0fdh
+out pa,al
+ret
+
+org 3200h
+strobe1:
+in al,pa
+or al,02h
+out pa,al
+ret
+
+org 3400H
+poll:in al,pa
+test al,1
+jnz poll
+ret
+
+org 3300h
+imprimir:
+push ax
+call poll
+pop ax
+out pb,al
+call strobe1
+call strobe0
+ret
+
+org 2000h
+call iniciar
+call strobe0
+
+mov bx,offset msj
+mov cl, offset fin-offset msj
+loop:int 6
+mov al,[bx]
+call imprimir
+inc bx
+dec cl
+jnz loop
+
+int 0
+end

@@ -1,0 +1,46 @@
+pa equ 30h
+pb equ 31h
+ca equ 32h
+cb equ 33h
+
+org 1000h
+char db "a"
+
+org 3000h
+ini: mov al, 0fdh
+out ca,al
+mov al,0
+out cb,al
+ret
+
+org 3200h
+poll: in al, pa
+test al,1
+jnz poll
+ret
+
+org 3300h
+consulta:in al,pa
+test al,0fdh
+out pa,al
+in al,pa
+or al,02h
+out pa,al
+ret
+
+org 3100h
+imprimir:
+push ax
+call poll
+pop ax
+out pb,al
+call consulta
+ret
+
+org 2000h
+call ini
+mov al,char
+call imprimir
+
+int 0
+end
