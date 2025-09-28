@@ -1,0 +1,29 @@
+eoi equ 20h
+imr equ 21h
+int0 equ 24h
+id_f10 equ 10
+
+org 40
+dw 3000h
+
+org 3000h
+presion:
+push ax
+inc dx
+mov al,20h
+out eoi,al
+pop ax
+iret
+
+org 2000h
+cli
+mov dx,0
+mov al,11111110b
+out imr,al
+
+mov al,id_f10
+out int0,al
+sti
+loop:jmp loop
+int 0
+end

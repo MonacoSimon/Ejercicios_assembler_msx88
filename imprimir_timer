@@ -1,0 +1,47 @@
+eoi equ 20h
+imr equ 21h
+int1 equ 25h
+id_int1 equ 20
+
+cont equ 10h
+comp equ 11h
+
+org 80
+dw 3000h
+
+org 1000h
+msj db "hola"
+flag db ?
+
+org 3000h
+contar:
+push ax
+mov bx, offset msj
+mov al,4
+int 7
+mov flag,1
+
+mov al,20h
+out eoi,al
+pop ax
+iret
+
+org 2000h
+cli
+mov flag,0
+mov al,11111101b
+out imr,al
+
+mov al,id_int1
+out int1,al
+
+mov al,10
+out comp,al
+
+mov al,0
+out cont,al
+sti
+loop: cmp flag,1
+jnz loop
+int 0
+end
